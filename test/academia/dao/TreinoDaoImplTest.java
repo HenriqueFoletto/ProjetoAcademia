@@ -29,7 +29,7 @@ public class TreinoDaoImplTest {
     @Test
     public void testSalvar() throws Exception {
         System.out.println("salvar");
-        treino = new Treino("abdominal, quadriceps bla bla bla");
+        treino = new Treino("Elevação Lateral, Apoio com Step, Panturrilha, Mesa flexora");
         treinoDao.salvar(treino);
     }
 
@@ -37,7 +37,7 @@ public class TreinoDaoImplTest {
     public void testAlterar() throws Exception {
         System.out.println("alterar");
         buscarTreinoBD();
-        treino.setNomeTreino("bíceps, tra la la");
+        treino.setNomeTreino("bíceps, Afundo, Agachamento");
         treinoDao.alterar(treino);
     }
 
