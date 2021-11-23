@@ -19,10 +19,10 @@ import static org.junit.Assert.*;
  * @author Henrique
  */
 public class ClienteDaoImplTest {
-    
+
     private Cliente cliente;
     private ClienteDao clienteDao;
-    
+
     public ClienteDaoImplTest() {
         clienteDao = new ClienteDaoImpl();
     }
@@ -32,8 +32,8 @@ public class ClienteDaoImplTest {
         System.out.println("salvar");
         Professor professor = new Professor();
         professor.setIdprofessor(3);
-        cliente = new Cliente("Pedro", "Pedro@", "23167", 132357943, 20, 
-                              "Ipiranga", "80kg", "1.87m", null);
+        cliente = new Cliente("Pedro", "Pedro@", "23167", 132357943, 20,
+                "Ipiranga", "80kg", "1.87m", null);
         cliente.setProfessor(professor);
         clienteDao.salvar(cliente);
     }
@@ -60,7 +60,7 @@ public class ClienteDaoImplTest {
         System.out.println("Matricula " + cliente.getMatricula());
         clienteDao.excluir(cliente.getMatricula());
     }
-    
+
 //    @Test
     public void testLogarSucesso() throws Exception {
         System.out.println("logar sucesso");
@@ -68,7 +68,7 @@ public class ClienteDaoImplTest {
         Cliente clienteLogado = clienteDao.logar(cliente.getEmail(), cliente.getSenha());
         assertNotNull(clienteLogado);
     }
-    
+
 //    @Test
     public void testLogarFalso() throws Exception {
         System.out.println("logar com erro");
@@ -80,7 +80,7 @@ public class ClienteDaoImplTest {
     public void testPesquisarPorMatricula() throws Exception {
         System.out.println("pesquisarPorMatricula");
         buscarClienteBD();
-        
+
         Cliente ClienteNovo = clienteDao.pesquisarPorMatricula(cliente.getMatricula());
         mostrarCliente(ClienteNovo);
     }
@@ -89,33 +89,36 @@ public class ClienteDaoImplTest {
     public void testPesquisarPorNome() throws Exception {
         System.out.println("PesquisarPorNome");
         buscarClienteBD();
-        
+
         List<Cliente> clientes = clienteDao.pesquisarPorNome(cliente.getNome());
-        for(Cliente cliente : clientes) {
+        for (Cliente cliente : clientes) {
             mostrarCliente(cliente);
+        }
     }
-}
-    
-    private void mostrarCliente(Cliente client){
+
+    private void mostrarCliente(Cliente client) {
         System.out.println("Matricula: " + client.getMatricula());
         System.out.println("Nome: " + client.getNome());
         System.out.println("Email: " + client.getEmail());
         System.out.println("Senha: " + client.getSenha());
         System.out.println("cpf: " + client.getCpf());
-        System.out.println("Idade: " + client.getIdade());  
-        System.out.println("Endereco: " + client.getEndereco());  
-        System.out.println("Peso: " + client.getPeso());  
-        System.out.println("Altura: " + client.getAltura());  
-        System.out.println("UltimoAcesso: " + client.getUltimoAcesso()); 
-        System.out.println(""); 
+        System.out.println("Idade: " + client.getIdade());
+        System.out.println("Endereco: " + client.getEndereco());
+        System.out.println("Peso: " + client.getPeso());
+        System.out.println("Altura: " + client.getAltura());
+        System.out.println("UltimoAcesso: " + client.getUltimoAcesso());
+        System.out.println("");
     }
-  
-    private Cliente buscarClienteBD() throws Exception{
-        String consulta = "SELECT * FROM cliente";
+
+    private Cliente buscarClienteBD() throws Exception {
+        String consulta = "SELECT c.*, pr.nomeprofessor pr_nomeprofessor"
+                + " FROM cliente c  join professor pr"
+                + " on c.idprofessor = pr.idprofessor";
         Connection conn = FabricaConexao.abrirConexao();
         PreparedStatement pstm = conn.prepareStatement(consulta);
         ResultSet resultado = pstm.executeQuery();
-        if(resultado.next()){
+        Professor professor;
+        if (resultado.next()) {
             cliente = new Cliente();
             cliente.setNome(resultado.getString("nome"));
             cliente.setEmail(resultado.getString("email"));
@@ -127,10 +130,10 @@ public class ClienteDaoImplTest {
             cliente.setAltura(resultado.getString("altura"));
             cliente.setUltimoAcesso(resultado.getDate("ultimoacesso"));
             cliente.setMatricula(resultado.getInt("matricula"));
-        }else{
+        } else {
             testSalvar();
         }
         return cliente;
     }
-    
+
 }

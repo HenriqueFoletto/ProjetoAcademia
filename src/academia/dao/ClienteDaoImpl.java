@@ -6,6 +6,7 @@
 package academia.dao;
 
 import academia.entidade.Cliente;
+import academia.entidade.Professor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -92,20 +93,33 @@ public class ClienteDaoImpl implements ClienteDao{
 
     @Override
     public Cliente pesquisarPorMatricula(int matricula) throws Exception {
-        String consulta = "SELECT * FROM cliente WHERE matricula = ?";
+        String consulta = "SELECT c.*, pr.nomeprofessor pr_nomeprofessor"
+                + " FROM cliente c  join professor pr"
+                + " on c.idprofessor = pr.idprofessor WHERE c.matricula = ?";
+        
         Cliente cliente = null;
         try {
             conexao = FabricaConexao.abrirConexao();
             preparaInstrucao = conexao.prepareStatement(consulta);
             preparaInstrucao.setInt(1, matricula);
             resultado = preparaInstrucao.executeQuery();
+            Professor professor;
             if (resultado.next()) {
-                cliente = new Cliente(resultado.getString("nome"),
-                resultado.getString("email"), resultado.getString("senha"),
-                resultado.getInt("cpf"), resultado.getInt("idade"),
-                resultado.getString("endereco"), resultado.getString("peso"),
-                resultado.getString("altura"), resultado.getDate("ultimoacesso"));
+                cliente = new Cliente();
                 cliente.setMatricula(matricula);
+                cliente.setNome(resultado.getString("nome"));
+                cliente.setEmail(resultado.getString("email")); 
+                cliente.setSenha(resultado.getString("senha"));
+                cliente.setCpf(resultado.getInt("cpf")); 
+                cliente.setIdade(resultado.getInt("idade"));
+                cliente.setEndereco(resultado.getString("endereco")); 
+                cliente.setPeso(resultado.getString("peso"));
+                cliente.setAltura(resultado.getString("altura")); 
+                cliente.setUltimoAcesso(resultado.getDate("ultimoacesso"));
+                cliente.setMatricula(matricula);
+                professor = new Professor(
+                      resultado.getString("pr_nomeprofessor"));
+                cliente.setProfessor(professor);
             }
         } catch (Exception e) {
             System.out.println("erro ao pesquisar matricula " + e.getMessage());
@@ -119,14 +133,17 @@ public class ClienteDaoImpl implements ClienteDao{
 
     @Override
     public List<Cliente> pesquisarPorNome(String nome) throws Exception {
-       String consulta = "SELECT * FROM cliente WHERE nome LIKE ?";
+       Cliente cliente; 
+       String consulta = "SELECT c.*, pr.nomeprofessor pr_nomeprofessor"
+                + " FROM cliente c  join professor pr"
+                + " on c.idprofessor = pr.idprofessor WHERE c.nome = ?";
         List<Cliente> clientes = new ArrayList<>();
         try {
             conexao = FabricaConexao.abrirConexao();
             preparaInstrucao = conexao.prepareStatement(consulta);
             preparaInstrucao.setString(1, "%" + nome + "%");
             resultado = preparaInstrucao.executeQuery();
-            Cliente cliente;
+            Professor professor;
             while(resultado.next()){
                 cliente = new Cliente();
                 cliente.setMatricula(resultado.getInt("matricula"));
@@ -140,6 +157,9 @@ public class ClienteDaoImpl implements ClienteDao{
                 cliente.setAltura(resultado.getString("altura"));
                 cliente.setUltimoAcesso(resultado.getDate("ultimoacesso"));
                 clientes.add(cliente);
+                professor = new Professor(
+                      resultado.getString("pr_professor"));
+                cliente.setProfessor(professor);
             }
         } catch (Exception e) {
             System.out.println("erro ao pesquisar por nome " + e.getMessage());
