@@ -96,7 +96,8 @@ public class ProfessorDaoImpl implements ProfessorDao{
             if (resultado.next()) {
                 professor = new Professor(resultado.getString("nomeprofessor"),
                         resultado.getString("email"), 
-                        resultado.getString("senha"));   
+                        resultado.getString("senha"),
+                        resultado.getDate("ultimoacesso"));   
                 professor.setIdprofessor(idprofessor);
                 treino = new Treino(
                         resultado.getString("t_nometreino"));
@@ -131,6 +132,7 @@ public class ProfessorDaoImpl implements ProfessorDao{
                 professor.setNomeProfessor(resultado.getString("nomeprofessor"));
                 professor.setEmail(resultado.getString("email"));
                 professor.setSenha(resultado.getString("senha"));
+                professor.setUltimoAcesso(resultado.getDate("ultimoacesso"));
                 professores.add(professor);
                 treino = new Treino(
                         resultado.getString("t_nometreino"));
@@ -144,6 +146,34 @@ public class ProfessorDaoImpl implements ProfessorDao{
             resultado.close();
         }
         return professores;
+    }
+
+    @Override
+    public Professor logar(String login, String senha) throws Exception {
+        String consulta = "SELECT * FROM professor WHERE email = ? and senha = ? ";
+        Professor professor = null;
+        try {
+            conexao = FabricaConexao.abrirConexao();
+            preparaInstrucao = conexao.prepareStatement(consulta);
+            preparaInstrucao.setString(1, login);
+            preparaInstrucao.setString(2, senha);
+            resultado = preparaInstrucao.executeQuery();
+            if (resultado.next()) {
+                professor = new Professor();
+                professor.setIdprofessor(resultado.getInt("idprofessor"));
+                professor.setNomeProfessor(resultado.getString("nomeprofessor"));
+                professor.setEmail(login);
+                professor.setSenha(senha);
+                professor.setUltimoAcesso(resultado.getDate("ultimoacesso"));
+            }
+        } catch (Exception e) {
+            System.out.println("erro ao logar cliente " + e.getMessage());
+        } finally {
+            conexao.close();
+            preparaInstrucao.close();
+            resultado.close();
+        }
+        return professor;
     }
 }
   

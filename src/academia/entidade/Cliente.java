@@ -6,7 +6,6 @@
 package academia.entidade;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *
@@ -23,14 +22,13 @@ public class Cliente implements Serializable {
     private String endereco;
     private String peso;
     private String altura;
-    private Date ultimoAcesso;
     private Professor professor;
 
     public Cliente() {
     }
 
     public Cliente(String nome, String email, String senha, int cpf,
-                int idade, String endereco, String peso, String altura, Date ultimoAcesso) {
+                int idade, String endereco, String peso, String altura) {
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
@@ -39,7 +37,6 @@ public class Cliente implements Serializable {
         this.endereco = endereco;
         this.peso = peso;
         this.altura = altura;
-        this.ultimoAcesso = ultimoAcesso;
     }
 
     public Integer getMatricula() {
@@ -112,14 +109,6 @@ public class Cliente implements Serializable {
 
     public void setAltura(String altura) {
         this.altura = altura;
-    }
-
-    public Date getUltimoAcesso() {
-        return ultimoAcesso;
-    }
-
-    public void setUltimoAcesso(Date ultimoAcesso) {
-        this.ultimoAcesso = ultimoAcesso;
     }
 
     public Professor getProfessor() {

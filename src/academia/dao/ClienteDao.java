@@ -17,6 +17,4 @@ public interface ClienteDao extends BaseDao{
     Cliente pesquisarPorMatricula(int matricula) throws Exception;
     
     List<Cliente> pesquisarPorNome(String nome) throws Exception;
-    
-    Cliente logar(String login, String senha)throws Exception;
 }

@@ -17,4 +17,6 @@ public interface ProfessorDao extends BaseDao{
     Professor pesquisarPeloProfessor(int idprofessor) throws Exception;
     
     List<Professor> pesquisarPorNome(String nomeProfessor) throws Exception;
+    
+    Professor logar(String login, String senha)throws Exception;
 }

@@ -5,6 +5,8 @@
  */
 package academia.entidade;
 
+import java.util.Date;
+
 /**
  *
  * @author Henrique
@@ -15,15 +17,17 @@ public class Professor {
     private String nomeProfessor;
     private String email;
     private String senha;
+    private Date ultimoAcesso;
     private Treino treino;
     
     public Professor(){
     }
     
-    public Professor(String nomeProfessor, String email, String senha){
+    public Professor(String nomeProfessor, String email, String senha, Date ultimoAcesso){
         this. nomeProfessor = nomeProfessor;
         this.email = email;
         this.senha = senha;
+        this.ultimoAcesso = ultimoAcesso;
     }
 
     public Integer getIdprofessor() {
@@ -56,6 +60,14 @@ public class Professor {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Date getUltimoAcesso() {
+        return ultimoAcesso;
+    }
+
+    public void setUltimoAcesso(Date ultimoAcesso) {
+        this.ultimoAcesso = ultimoAcesso;
     }
     
     public Treino getTreino() {

@@ -114,12 +114,12 @@ public class ClienteDaoImpl implements ClienteDao{
                 cliente.setIdade(resultado.getInt("idade"));
                 cliente.setEndereco(resultado.getString("endereco")); 
                 cliente.setPeso(resultado.getString("peso"));
-                cliente.setAltura(resultado.getString("altura")); 
-                cliente.setUltimoAcesso(resultado.getDate("ultimoacesso"));
+                cliente.setAltura(resultado.getString("altura"));
                 professor = new Professor(
                       resultado.getString("pr_nomeprofessor"),
                       resultado.getString("email"),
-                      resultado.getString("senha"));
+                      resultado.getString("senha"),
+                      resultado.getDate("ultimoacesso"));
                 cliente.setProfessor(professor);
             }
         } catch (Exception e) {
@@ -156,12 +156,12 @@ public class ClienteDaoImpl implements ClienteDao{
                 cliente.setEndereco(resultado.getString("endereco"));
                 cliente.setPeso(resultado.getString("peso"));
                 cliente.setAltura(resultado.getString("altura"));
-                cliente.setUltimoAcesso(resultado.getDate("ultimoacesso"));
                 clientes.add(cliente);
                 professor = new Professor(
                       resultado.getString("pr_nomeprofessor"),
                       resultado.getString("email"),
-                      resultado.getString("senha"));
+                      resultado.getString("senha"),
+                      resultado.getDate("ultimoacesso"));
                 cliente.setProfessor(professor);
             }
         } catch (Exception e) {
@@ -172,33 +172,5 @@ public class ClienteDaoImpl implements ClienteDao{
             resultado.close();
         }
         return clientes;
-    }        
-
-    @Override
-    public Cliente logar(String login, String senha) throws Exception {
-        String consulta = "SELECT * FROM cliente WHERE email = ? and senha = ? ";
-        Cliente cliente = null;
-        try {
-            conexao = FabricaConexao.abrirConexao();
-            preparaInstrucao = conexao.prepareStatement(consulta);
-            preparaInstrucao.setString(1, login);
-            preparaInstrucao.setString(2, senha);
-            resultado = preparaInstrucao.executeQuery();
-            if (resultado.next()) {
-                cliente = new Cliente();
-                cliente.setMatricula(resultado.getInt("matricula"));
-                cliente.setNome(resultado.getString("nome"));
-                cliente.setEmail(login);
-                cliente.setSenha(senha);
-                cliente.setUltimoAcesso(resultado.getDate("ultimoacesso"));
-            }
-        } catch (Exception e) {
-            System.out.println("erro ao logar cliente " + e.getMessage());
-        } finally {
-            conexao.close();
-            preparaInstrucao.close();
-            resultado.close();
-        }
-        return cliente;
-    }
+    }     
 }

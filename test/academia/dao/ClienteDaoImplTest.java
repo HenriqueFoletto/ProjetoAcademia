@@ -33,7 +33,7 @@ public class ClienteDaoImplTest {
         Professor professor = new Professor();
         professor.setIdprofessor(3);
         cliente = new Cliente("Pedro", "Pedro@", "23167", 132357943, 20,
-                "Ipiranga", "80kg", "1.87m", null);
+                "Ipiranga", "80kg", "1.87m");
         cliente.setProfessor(professor);
         clienteDao.salvar(cliente);
     }
@@ -59,21 +59,6 @@ public class ClienteDaoImplTest {
         buscarClienteBD();
         System.out.println("Matricula " + cliente.getMatricula());
         clienteDao.excluir(cliente.getMatricula());
-    }
-
-//    @Test
-    public void testLogarSucesso() throws Exception {
-        System.out.println("logar sucesso");
-        buscarClienteBD();
-        Cliente clienteLogado = clienteDao.logar(cliente.getEmail(), cliente.getSenha());
-        assertNotNull(clienteLogado);
-    }
-
-//    @Test
-    public void testLogarFalso() throws Exception {
-        System.out.println("logar com erro");
-        Cliente clienteLogado = clienteDao.logar("", "");
-        assertNull(clienteLogado);
     }
 
 //    @Test
@@ -106,7 +91,6 @@ public class ClienteDaoImplTest {
         System.out.println("Endereco: " + client.getEndereco());
         System.out.println("Peso: " + client.getPeso());
         System.out.println("Altura: " + client.getAltura());
-        System.out.println("UltimoAcesso: " + client.getUltimoAcesso());
         System.out.println("");
     }
 
@@ -128,7 +112,6 @@ public class ClienteDaoImplTest {
             cliente.setEndereco(resultado.getString("endereco"));
             cliente.setPeso(resultado.getString("peso"));
             cliente.setAltura(resultado.getString("altura"));
-            cliente.setUltimoAcesso(resultado.getDate("ultimoacesso"));
             cliente.setMatricula(resultado.getInt("matricula"));
         } else {
             testSalvar();
