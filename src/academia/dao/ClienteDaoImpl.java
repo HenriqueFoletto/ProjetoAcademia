@@ -117,7 +117,9 @@ public class ClienteDaoImpl implements ClienteDao{
                 cliente.setAltura(resultado.getString("altura")); 
                 cliente.setUltimoAcesso(resultado.getDate("ultimoacesso"));
                 professor = new Professor(
-                      resultado.getString("pr_nomeprofessor"));
+                      resultado.getString("pr_nomeprofessor"),
+                      resultado.getString("email"),
+                      resultado.getString("senha"));
                 cliente.setProfessor(professor);
             }
         } catch (Exception e) {
@@ -157,7 +159,9 @@ public class ClienteDaoImpl implements ClienteDao{
                 cliente.setUltimoAcesso(resultado.getDate("ultimoacesso"));
                 clientes.add(cliente);
                 professor = new Professor(
-                      resultado.getString("pr_professor"));
+                      resultado.getString("pr_nomeprofessor"),
+                      resultado.getString("email"),
+                      resultado.getString("senha"));
                 cliente.setProfessor(professor);
             }
         } catch (Exception e) {

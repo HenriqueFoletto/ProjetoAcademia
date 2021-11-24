@@ -31,8 +31,8 @@ public class ProfessorDaoImplTest {
     public void testSalvar() throws Exception {
         System.out.println("salvar");
         Treino treino = new Treino();
-        treino.setIdtreino(6);
-        professor = new Professor("José");
+        treino.setIdtreino(4);
+        professor = new Professor("Leticia", "Leticia@" , "12346");
         professor.setTreino(treino);
         professorDao.salvar(professor);
     }
@@ -41,7 +41,9 @@ public class ProfessorDaoImplTest {
     public void testAlterar() throws Exception {
         System.out.println("alterar");
         buscarProfessorBD();
-        professor.setNomeProfessor("José");
+        professor.setNomeProfessor("Rafael");
+        professor.setEmail("Rafael@");
+        professor.setSenha("76332");
         professorDao.alterar(professor);
         
     }
@@ -50,7 +52,7 @@ public class ProfessorDaoImplTest {
     public void testExcluir() throws Exception {
         System.out.println("excluir");
         buscarProfessorBD();
-        System.out.println("IdTreino " + professor.getIdprofessor());
+        System.out.println("IdProfessor " + professor.getIdprofessor());
         professorDao.excluir(professor.getIdprofessor());
     }
 
@@ -75,17 +77,23 @@ public class ProfessorDaoImplTest {
     private void mostrarProfessor(Professor prof) {
         System.out.println("Id: " + prof.getIdprofessor());
         System.out.println("Nome: " + prof.getNomeProfessor());
+        System.out.println("Email: " + prof.getEmail());
+        System.out.println("Senha: " + prof.getSenha());
         System.out.println("");
     }
     
     public Professor buscarProfessorBD() throws Exception {
-        String consulta = "SELECT * FROM professor";
+        String consulta = "SELECT pr.*, t.nometreino t_treino"
+                        + " FROM professor pr join treino t"
+                        + " on pr.idtreino = t.idtreino";
         Connection conn = FabricaConexao.abrirConexao();
         PreparedStatement pstm = conn.prepareStatement(consulta);
         ResultSet resultado = pstm.executeQuery();
         if(resultado.next()){
             professor = new Professor();
             professor.setNomeProfessor(resultado.getString("nomeprofessor"));
+            professor.setEmail(resultado.getString("email"));
+            professor.setSenha(resultado.getString("senha"));
             professor.setIdprofessor(resultado.getInt("idprofessor"));
         }else{
             testSalvar();

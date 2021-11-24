@@ -26,12 +26,14 @@ public class ProfessorDaoImpl implements ProfessorDao{
     @Override
     public void salvar(Object object) throws Exception {
        Professor professor = (Professor) object;
-        String instrucao = "INSERT INTO professor (nomeprofessor, idtreino) VALUES(?, ?)";
+        String instrucao = "INSERT INTO professor (nomeprofessor, email, senha, idtreino) VALUES(?, ?, ?, ?)";
         try{
             conexao = FabricaConexao.abrirConexao();
             preparaInstrucao = conexao.prepareStatement(instrucao, Statement.RETURN_GENERATED_KEYS);
             preparaInstrucao.setString(1, professor.getNomeProfessor());
-            preparaInstrucao.setInt(2, professor.getTreino().getIdtreino());
+            preparaInstrucao.setString(2, professor.getEmail());
+            preparaInstrucao.setString(3, professor.getSenha());
+            preparaInstrucao.setInt(4, professor.getTreino().getIdtreino());
             preparaInstrucao.executeUpdate();
             resultado = preparaInstrucao.getGeneratedKeys();
             resultado.next();
@@ -47,12 +49,14 @@ public class ProfessorDaoImpl implements ProfessorDao{
     @Override
     public void alterar(Object object) throws Exception {
         Professor professor = (Professor) object;
-       String instrucao = "UPDATE professor SET nomeprofessor = ? WHERE idprofessor = ?";
+       String instrucao = "UPDATE professor SET nomeprofessor = ?, email = ?, senha = ? WHERE idprofessor = ?";
         try{
             conexao = FabricaConexao.abrirConexao();
             preparaInstrucao = conexao.prepareStatement(instrucao);
             preparaInstrucao.setString(1, professor.getNomeProfessor());
-            preparaInstrucao.setInt(2, professor.getIdprofessor());    
+            preparaInstrucao.setString(2, professor.getEmail());
+            preparaInstrucao.setString(3, professor.getSenha());
+            preparaInstrucao.setInt(4, professor.getIdprofessor());    
             preparaInstrucao.executeUpdate();
         } catch (Exception e) {
             System.out.println("erro ao alterar o nomeprofessor" + e.getMessage());
@@ -79,7 +83,7 @@ public class ProfessorDaoImpl implements ProfessorDao{
 
     @Override
     public Professor pesquisarPeloProfessor(int idprofessor) throws Exception {
-        String consulta = "SELECT pr.*, t.nometreino t_treino"
+        String consulta = "SELECT pr.*, t.nometreino t_nometreino"
                         + " FROM professor pr join treino t"
                         + " on pr.idtreino = t.idtreino WHERE idprofessor = ?";
         Professor professor = null;
@@ -90,7 +94,9 @@ public class ProfessorDaoImpl implements ProfessorDao{
             resultado = preparaInstrucao.executeQuery();
             Treino treino;
             if (resultado.next()) {
-                professor = new Professor(resultado.getString("nomeprofessor"));
+                professor = new Professor(resultado.getString("nomeprofessor"),
+                        resultado.getString("email"), 
+                        resultado.getString("senha"));   
                 professor.setIdprofessor(idprofessor);
                 treino = new Treino(
                         resultado.getString("t_nometreino"));
@@ -108,9 +114,9 @@ public class ProfessorDaoImpl implements ProfessorDao{
 
     @Override
     public List<Professor> pesquisarPorNome(String nomeProfessor) throws Exception {
-        String consulta = "SELECT pr.*, t.nometreino t_treino"
+        String consulta = "SELECT pr.*, t.nometreino t_nometreino"
                         + " FROM professor pr join treino t"
-                        + " on pr.idtreino = t.idtreino WHERE idprofessor LIKE ?";
+                        + " on pr.idtreino = t.idtreino WHERE pr.nomeprofessor LIKE ?";
         List<Professor> professores = new ArrayList<>();
         try {
             conexao = FabricaConexao.abrirConexao();
@@ -123,6 +129,8 @@ public class ProfessorDaoImpl implements ProfessorDao{
                 professor = new Professor();
                 professor.setIdprofessor(resultado.getInt("idprofessor"));
                 professor.setNomeProfessor(resultado.getString("nomeprofessor"));
+                professor.setEmail(resultado.getString("email"));
+                professor.setSenha(resultado.getString("senha"));
                 professores.add(professor);
                 treino = new Treino(
                         resultado.getString("t_nometreino"));

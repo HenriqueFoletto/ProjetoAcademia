@@ -13,13 +13,17 @@ public class Professor {
     
     private Integer idprofessor;
     private String nomeProfessor;
+    private String email;
+    private String senha;
     private Treino treino;
     
     public Professor(){
     }
     
-    public Professor(String nomeProfessor){
+    public Professor(String nomeProfessor, String email, String senha){
         this. nomeProfessor = nomeProfessor;
+        this.email = email;
+        this.senha = senha;
     }
 
     public Integer getIdprofessor() {
@@ -38,6 +42,22 @@ public class Professor {
         this.nomeProfessor = nomeProfessor;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    
     public Treino getTreino() {
         return treino;
     }
@@ -46,4 +66,5 @@ public class Professor {
         this.treino = treino;
     }
    
+    
 }
