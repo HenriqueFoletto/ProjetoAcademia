@@ -31,8 +31,8 @@ public class ProfessorDaoImplTest {
     public void testSalvar() throws Exception {
         System.out.println("salvar");
         Treino treino = new Treino();
-        treino.setIdtreino(5);
-        professor = new Professor("Fernando");
+        treino.setIdtreino(6);
+        professor = new Professor("José");
         professor.setTreino(treino);
         professorDao.salvar(professor);
     }
