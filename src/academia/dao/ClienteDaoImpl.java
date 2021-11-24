@@ -116,7 +116,6 @@ public class ClienteDaoImpl implements ClienteDao{
                 cliente.setPeso(resultado.getString("peso"));
                 cliente.setAltura(resultado.getString("altura")); 
                 cliente.setUltimoAcesso(resultado.getDate("ultimoacesso"));
-                cliente.setMatricula(matricula);
                 professor = new Professor(
                       resultado.getString("pr_nomeprofessor"));
                 cliente.setProfessor(professor);
@@ -136,7 +135,7 @@ public class ClienteDaoImpl implements ClienteDao{
        Cliente cliente; 
        String consulta = "SELECT c.*, pr.nomeprofessor pr_nomeprofessor"
                 + " FROM cliente c  join professor pr"
-                + " on c.idprofessor = pr.idprofessor WHERE c.nome = ?";
+                + " on c.idprofessor = pr.idprofessor WHERE c.nome LIKE ?";
         List<Cliente> clientes = new ArrayList<>();
         try {
             conexao = FabricaConexao.abrirConexao();

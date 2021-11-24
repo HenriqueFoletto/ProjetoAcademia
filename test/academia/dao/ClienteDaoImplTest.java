@@ -76,7 +76,7 @@ public class ClienteDaoImplTest {
         assertNull(clienteLogado);
     }
 
-//    @Test
+    @Test
     public void testPesquisarPorMatricula() throws Exception {
         System.out.println("pesquisarPorMatricula");
         buscarClienteBD();

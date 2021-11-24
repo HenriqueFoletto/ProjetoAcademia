@@ -6,6 +6,7 @@
 package academia.dao;
 
 import academia.entidade.Professor;
+import academia.entidade.Treino;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -78,16 +79,22 @@ public class ProfessorDaoImpl implements ProfessorDao{
 
     @Override
     public Professor pesquisarPeloProfessor(int idprofessor) throws Exception {
-        String consulta = "SELECT * FROM professor WHERE idprofessor = ?";
+        String consulta = "SELECT pr.*, t.nometreino t_treino"
+                        + " FROM professor pr join treino t"
+                        + " on pr.idtreino = t.idtreino WHERE idprofessor = ?";
         Professor professor = null;
         try {
             conexao = FabricaConexao.abrirConexao();
             preparaInstrucao = conexao.prepareStatement(consulta);
             preparaInstrucao.setInt(1, idprofessor);
             resultado = preparaInstrucao.executeQuery();
+            Treino treino;
             if (resultado.next()) {
                 professor = new Professor(resultado.getString("nomeprofessor"));
                 professor.setIdprofessor(idprofessor);
+                treino = new Treino(
+                        resultado.getString("t_nometreino"));
+                professor.setTreino(treino);
             }
         } catch (Exception e) {
             System.out.println("erro ao pesquisar pelo IdProfessor " + e.getMessage());
@@ -101,7 +108,9 @@ public class ProfessorDaoImpl implements ProfessorDao{
 
     @Override
     public List<Professor> pesquisarPorNome(String nomeProfessor) throws Exception {
-        String consulta = "SELECT * FROM professor WHERE nomeprofessor LIKE ?";
+        String consulta = "SELECT pr.*, t.nometreino t_treino"
+                        + " FROM professor pr join treino t"
+                        + " on pr.idtreino = t.idtreino WHERE idprofessor LIKE ?";
         List<Professor> professores = new ArrayList<>();
         try {
             conexao = FabricaConexao.abrirConexao();
@@ -109,11 +118,15 @@ public class ProfessorDaoImpl implements ProfessorDao{
             preparaInstrucao.setString(1, "%" + nomeProfessor + "%");
             resultado = preparaInstrucao.executeQuery();
             Professor professor;
+            Treino treino;
             while(resultado.next()){
                 professor = new Professor();
                 professor.setIdprofessor(resultado.getInt("idprofessor"));
                 professor.setNomeProfessor(resultado.getString("nomeprofessor"));
                 professores.add(professor);
+                treino = new Treino(
+                        resultado.getString("t_nometreino"));
+                professor.setTreino(treino);
             }
         } catch (Exception e) {
             System.out.println("erro ao pesquisar nomeProfessor " + e.getMessage());
