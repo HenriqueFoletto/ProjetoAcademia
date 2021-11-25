@@ -8,21 +8,25 @@ package academia.tela;
 import academia.dao.ProfessorDao;
 import academia.dao.ProfessorDaoImpl;
 import academia.entidade.Professor;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import academia.entidade.Treino;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Henrique
  */
-public class Login extends javax.swing.JFrame {
+public class CadastroProfessor extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
-    public Login() {
+    private Professor professor;
+    private ProfessorDao professorDao = new ProfessorDaoImpl(); 
+    
+    public CadastroProfessor() {
         initComponents();
+    }
+    
+    public CadastroProfessor(Professor professor) {
+        initComponents();
+        this.professor = professor;
     }
 
     /**
@@ -35,32 +39,32 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         lbTitulo = new javax.swing.JLabel();
+        lbNome = new javax.swing.JLabel();
+        varNome = new javax.swing.JTextField();
         lbLogin = new javax.swing.JLabel();
-        lbSenha = new javax.swing.JLabel();
         varLogin = new javax.swing.JTextField();
-        varSenha = new javax.swing.JPasswordField();
-        varLogar = new javax.swing.JButton();
+        btSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Login Academia");
+        setTitle("Cadastro Professor");
 
         lbTitulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbTitulo.setText("Login Academia");
+        lbTitulo.setText("Cadastrar Professor");
+
+        lbNome.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbNome.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbNome.setText("Nome:");
 
         lbLogin.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbLogin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbLogin.setText("Login:");
 
-        lbSenha.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbSenha.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbSenha.setText("Senha:");
-
-        varLogar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        varLogar.setText("Logar");
-        varLogar.addActionListener(new java.awt.event.ActionListener() {
+        btSalvar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btSalvar.setText("Salvar");
+        btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                varLogarActionPerformed(evt);
+                btSalvarActionPerformed(evt);
             }
         });
 
@@ -71,54 +75,68 @@ public class Login extends javax.swing.JFrame {
             .addComponent(lbTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(varNome, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(varLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(varSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(varLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(varLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lbTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbNome)
+                    .addComponent(varNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbLogin)
                     .addComponent(varLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbSenha)
-                    .addComponent(varSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(varLogar))
-                .addGap(0, 136, Short.MAX_VALUE))
+                .addComponent(btSalvar)
+                .addGap(0, 127, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void varLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_varLogarActionPerformed
-        ProfessorDao professorDao = new ProfessorDaoImpl();
-        try {
-            Professor professor = professorDao.logar(varLogin.getText(), String.valueOf(varSenha.getPassword()));
-            if (professor == null) {
-                JOptionPane.showMessageDialog(null, "Login ou senha incorretos!");
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+      if(professor == null){
+        professor = new Professor();
+        professor.setSenha("12349");
+        Treino treino = new Treino();
+        treino.setIdtreino(4);
+        professor.setTreino(treino);
+       } 
+        professor.setNomeProfessor(varNome.getText().trim());
+        professor.setEmail(varLogin.getText().trim());
+        try{
+        if(professor.getIdprofessor() == null){
+              professorDao.salvar(professor);
+              JOptionPane.showMessageDialog(null, "Salvo com sucesso!");  
             }else{
-                new Inicio(professor).setVisible(true);
-                dispose(); 
+              professorDao.alterar(professor);  
+              JOptionPane.showMessageDialog(null, "Alterado com sucesso!");  
             }
-        } catch (Exception ex) {
-            System.out.println("Erro ao logar" + ex.getMessage());
+            limparFormulario();
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar professor " + e.getMessage());
         }
-    }//GEN-LAST:event_varLogarActionPerformed
+    }//GEN-LAST:event_btSalvarActionPerformed
 
+    private void limparFormulario(){
+        varNome.setText(null);
+        varLogin.setText(null);
+    }
     /**
      * @param args the command line arguments
      */
@@ -136,30 +154,30 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroProfessor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroProfessor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroProfessor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroProfessor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new CadastroProfessor().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btSalvar;
     private javax.swing.JLabel lbLogin;
-    private javax.swing.JLabel lbSenha;
+    private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbTitulo;
-    private javax.swing.JButton varLogar;
     private javax.swing.JTextField varLogin;
-    private javax.swing.JPasswordField varSenha;
+    private javax.swing.JTextField varNome;
     // End of variables declaration//GEN-END:variables
 }

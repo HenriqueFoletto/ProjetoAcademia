@@ -37,69 +37,78 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        lbCadastroCliente = new javax.swing.JLabel();
-        lbPesquisarCliente = new javax.swing.JLabel();
+        btCadastrarCliente = new javax.swing.JButton();
+        btPesquisarCliente = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        menuCadastro = new javax.swing.JMenu();
+        menuCadastroCliente = new javax.swing.JMenuItem();
+        menuCadastroProfessor = new javax.swing.JMenuItem();
+        menuPesquisa = new javax.swing.JMenu();
+        menuPesquisaCliente = new javax.swing.JMenuItem();
+        menuPesquisaProfessor = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
         jMenu2.setText("jMenu2");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("tela Inicio");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tela Inicio");
 
-        lbCadastroCliente.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        lbCadastroCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/academia/imagens/novo-usuario.png"))); // NOI18N
-        lbCadastroCliente.setText("Cadastrar Cliente");
-
-        lbPesquisarCliente.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        lbPesquisarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/academia/imagens/contorno-da-lupa-de-pesquisa.png"))); // NOI18N
-        lbPesquisarCliente.setText("Pesquisar Cliente");
-
-        jMenu1.setText("Cadastro");
-
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem4.setText("Meu Perfil");
-        jMenu1.add(jMenuItem4);
-
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem3.setText("Cadastrar Cliente");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        btCadastrarCliente.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        btCadastrarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/academia/imagens/novo-usuario.png"))); // NOI18N
+        btCadastrarCliente.setText("Cadastrar Professor");
+        btCadastrarCliente.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btCadastrarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btCadastrarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                btCadastrarClienteActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem2.setText("Cadastrar Professor");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        btPesquisarCliente.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        btPesquisarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/academia/imagens/contorno-da-lupa-de-pesquisa.png"))); // NOI18N
+        btPesquisarCliente.setText("Pesquisar Professor ");
+        btPesquisarCliente.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btPesquisarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btPesquisarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                btPesquisarClienteActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
 
-        jMenuBar1.add(jMenu1);
+        menuCadastro.setText("Cadastro");
 
-        jMenu6.setText("Pesquisa");
+        menuCadastroCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuCadastroCliente.setText("Cadastrar Cliente");
+        menuCadastro.add(menuCadastroCliente);
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
-        jMenuItem5.setText("Clientes");
-        jMenu6.add(jMenuItem5);
+        menuCadastroProfessor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuCadastroProfessor.setText("Cadastrar Professor");
+        menuCadastroProfessor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                menuCadastroProfessorMousePressed(evt);
+            }
+        });
+        menuCadastro.add(menuCadastroProfessor);
 
-        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
-        jMenuItem7.setText("Professores");
-        jMenu6.add(jMenuItem7);
+        jMenuBar1.add(menuCadastro);
 
-        jMenuBar1.add(jMenu6);
+        menuPesquisa.setText("Pesquisa");
+
+        menuPesquisaCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        menuPesquisaCliente.setText("Clientes");
+        menuPesquisa.add(menuPesquisaCliente);
+
+        menuPesquisaProfessor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        menuPesquisaProfessor.setText("Professores");
+        menuPesquisaProfessor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                menuPesquisaProfessorMousePressed(evt);
+            }
+        });
+        menuPesquisa.add(menuPesquisaProfessor);
+
+        jMenuBar1.add(menuPesquisa);
 
         setJMenuBar(jMenuBar1);
 
@@ -108,33 +117,41 @@ public class Inicio extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(149, 149, 149)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbCadastroCliente)
-                    .addComponent(lbPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addGap(89, 89, 89)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btCadastrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(lbCadastroCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lbPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addGap(48, 48, 48)
+                .addComponent(btCadastrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(btPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    private void menuCadastroProfessorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCadastroProfessorMousePressed
+        new CadastroProfessor().setVisible(true);
+    }//GEN-LAST:event_menuCadastroProfessorMousePressed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void menuPesquisaProfessorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPesquisaProfessorMousePressed
+        new PesquisarProfessor().setVisible(true);
+    }//GEN-LAST:event_menuPesquisaProfessorMousePressed
+
+    private void btCadastrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarClienteActionPerformed
+        new CadastroProfessor().setVisible(true);
+    }//GEN-LAST:event_btCadastrarClienteActionPerformed
+
+    private void btPesquisarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarClienteActionPerformed
+        new PesquisarProfessor().setVisible(true);
+    }//GEN-LAST:event_btPesquisarClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,17 +189,16 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JButton btCadastrarCliente;
+    private javax.swing.JButton btPesquisarCliente;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JLabel lbCadastroCliente;
-    private javax.swing.JLabel lbPesquisarCliente;
+    private javax.swing.JMenu menuCadastro;
+    private javax.swing.JMenuItem menuCadastroCliente;
+    private javax.swing.JMenuItem menuCadastroProfessor;
+    private javax.swing.JMenu menuPesquisa;
+    private javax.swing.JMenuItem menuPesquisaCliente;
+    private javax.swing.JMenuItem menuPesquisaProfessor;
     // End of variables declaration//GEN-END:variables
 }
