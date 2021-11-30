@@ -149,8 +149,6 @@ public class CadastroProfessor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-
-       
         if (professor == null) {
             professor = new Professor();
             professor.setSenha("1234");
