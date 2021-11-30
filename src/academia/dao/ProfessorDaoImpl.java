@@ -96,8 +96,7 @@ public class ProfessorDaoImpl implements ProfessorDao{
             if (resultado.next()) {
                 professor = new Professor(resultado.getString("nomeprofessor"),
                         resultado.getString("email"), 
-                        resultado.getString("senha"),
-                        resultado.getDate("ultimoacesso"));   
+                        resultado.getString("senha"));   
                 professor.setIdprofessor(idprofessor);
                 treino = new Treino(
                         resultado.getString("t_nometreino"));
@@ -132,7 +131,6 @@ public class ProfessorDaoImpl implements ProfessorDao{
                 professor.setNomeProfessor(resultado.getString("nomeprofessor"));
                 professor.setEmail(resultado.getString("email"));
                 professor.setSenha(resultado.getString("senha"));
-                professor.setUltimoAcesso(resultado.getDate("ultimoacesso"));
                 professores.add(professor);
                 treino = new Treino(
                         resultado.getString("t_nometreino"));
@@ -164,7 +162,6 @@ public class ProfessorDaoImpl implements ProfessorDao{
                 professor.setNomeProfessor(resultado.getString("nomeprofessor"));
                 professor.setEmail(login);
                 professor.setSenha(senha);
-                professor.setUltimoAcesso(resultado.getDate("ultimoacesso"));
             }
         } catch (Exception e) {
             System.out.println("erro ao logar cliente " + e.getMessage());
@@ -174,7 +171,7 @@ public class ProfessorDaoImpl implements ProfessorDao{
             resultado.close();
         }
         return professor;
-    }
-}
+    }    
+}     
   
 

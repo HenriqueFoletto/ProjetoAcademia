@@ -7,8 +7,11 @@ package academia.tela;
 
 import academia.dao.ProfessorDao;
 import academia.dao.ProfessorDaoImpl;
+import academia.dao.TreinoDao;
+import academia.dao.TreinoDaoImpl;
 import academia.entidade.Professor;
 import academia.entidade.Treino;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,15 +21,38 @@ import javax.swing.JOptionPane;
 public class CadastroProfessor extends javax.swing.JFrame {
 
     private Professor professor;
-    private ProfessorDao professorDao = new ProfessorDaoImpl(); 
-    
+    private ProfessorDao professorDao = new ProfessorDaoImpl();
+    private List<Treino> treinos;
+
     public CadastroProfessor() {
         initComponents();
+        treinosCombobox();
     }
-    
+
     public CadastroProfessor(Professor professor) {
         initComponents();
         this.professor = professor;
+        varNome.setText(professor.getNomeProfessor());
+        varLogin.setText(professor.getEmail());
+        treinosCombobox();
+        varBoxTreino.setSelectedItem(professor.getTreino().getNomeTreino());
+    }
+
+    private void treinosCombobox() {
+        TreinoDao treinoDao = new TreinoDaoImpl();
+        try {
+            treinos = treinoDao.pesquisarTreinos();
+            carregarComboTreino(treinos);
+        } catch (Exception ex) {
+            System.err.println("Erro ao carregar combobox" + ex.getMessage());
+        }
+    }
+
+    private void carregarComboTreino(List<Treino> treinos) {
+        varBoxTreino.addItem("Escolha um tipo de Treino");
+        for (Treino treino : treinos) {
+            varBoxTreino.addItem(treino.getNomeTreino());
+        }
     }
 
     /**
@@ -44,6 +70,8 @@ public class CadastroProfessor extends javax.swing.JFrame {
         lbLogin = new javax.swing.JLabel();
         varLogin = new javax.swing.JTextField();
         btSalvar = new javax.swing.JButton();
+        varBoxTreino = new javax.swing.JComboBox<>();
+        lbLogin1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro Professor");
@@ -68,6 +96,10 @@ public class CadastroProfessor extends javax.swing.JFrame {
             }
         });
 
+        lbLogin1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbLogin1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbLogin1.setText("Treinos:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,11 +113,14 @@ public class CadastroProfessor extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(varNome, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(varLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(varLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(varBoxTreino, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -101,8 +136,12 @@ public class CadastroProfessor extends javax.swing.JFrame {
                     .addComponent(lbLogin)
                     .addComponent(varLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(varBoxTreino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbLogin1))
+                .addGap(37, 37, 37)
                 .addComponent(btSalvar)
-                .addGap(0, 127, Short.MAX_VALUE))
+                .addGap(0, 68, Short.MAX_VALUE))
         );
 
         pack();
@@ -110,22 +149,24 @@ public class CadastroProfessor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-      if(professor == null){
-        professor = new Professor();
-        professor.setSenha("12349");
-        Treino treino = new Treino();
-        treino.setIdtreino(4);
+
+       
+        if (professor == null) {
+            professor = new Professor();
+            professor.setSenha("1234");
+        }
+        int linhaSelecionada = varBoxTreino.getSelectedIndex();
+        Treino treino = treinos.get(linhaSelecionada - 1);
         professor.setTreino(treino);
-       } 
         professor.setNomeProfessor(varNome.getText().trim());
         professor.setEmail(varLogin.getText().trim());
-        try{
-        if(professor.getIdprofessor() == null){
-              professorDao.salvar(professor);
-              JOptionPane.showMessageDialog(null, "Salvo com sucesso!");  
-            }else{
-              professorDao.alterar(professor);  
-              JOptionPane.showMessageDialog(null, "Alterado com sucesso!");  
+        try {
+            if (professor.getIdprofessor() == null) {
+                professorDao.salvar(professor);
+                JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            } else {
+                professorDao.alterar(professor);
+                JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
             }
             limparFormulario();
         } catch (Exception e) {
@@ -133,10 +174,13 @@ public class CadastroProfessor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btSalvarActionPerformed
 
-    private void limparFormulario(){
+    private void limparFormulario() {
         varNome.setText(null);
         varLogin.setText(null);
+        varBoxTreino.removeAllItems();
+        carregarComboTreino(treinos);
     }
+
     /**
      * @param args the command line arguments
      */
@@ -175,8 +219,10 @@ public class CadastroProfessor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSalvar;
     private javax.swing.JLabel lbLogin;
+    private javax.swing.JLabel lbLogin1;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbTitulo;
+    private javax.swing.JComboBox<String> varBoxTreino;
     private javax.swing.JTextField varLogin;
     private javax.swing.JTextField varNome;
     // End of variables declaration//GEN-END:variables

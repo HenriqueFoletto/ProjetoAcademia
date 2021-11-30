@@ -32,7 +32,7 @@ public class ProfessorDaoImplTest {
         System.out.println("salvar");
         Treino treino = new Treino();
         treino.setIdtreino(4);
-        professor = new Professor("Vagner", "Vagner@" , "43121", null);
+        professor = new Professor("Vagner", "Vagner@" , "43121");
         professor.setTreino(treino);
         professorDao.salvar(professor);
     }
@@ -79,7 +79,6 @@ public class ProfessorDaoImplTest {
         System.out.println("Nome: " + prof.getNomeProfessor());
         System.out.println("Email: " + prof.getEmail());
         System.out.println("Senha: " + prof.getSenha());
-        System.out.println("UltimoAcesso: " + prof.getUltimoAcesso());
         System.out.println("");
     }
     
@@ -95,7 +94,6 @@ public class ProfessorDaoImplTest {
             professor.setNomeProfessor(resultado.getString("nomeprofessor"));
             professor.setEmail(resultado.getString("email"));
             professor.setSenha(resultado.getString("senha"));
-            professor.setUltimoAcesso(resultado.getDate("ultimoacesso"));
             professor.setIdprofessor(resultado.getInt("idprofessor"));
         }else{
             testSalvar();

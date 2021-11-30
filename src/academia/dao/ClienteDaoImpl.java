@@ -36,7 +36,7 @@ public class ClienteDaoImpl implements ClienteDao{
             preparaInstrucao.setString(2, cliente.getEmail());
             preparaInstrucao.setString(3, cliente.getSenha());
             preparaInstrucao.setInt(4, cliente.getCpf());
-            preparaInstrucao.setInt(5, cliente.getIdade());
+            preparaInstrucao.setString(5, cliente.getIdade());
             preparaInstrucao.setString(6, cliente.getEndereco());
             preparaInstrucao.setString(7, cliente.getPeso());
             preparaInstrucao.setString(8, cliente.getAltura());
@@ -57,16 +57,17 @@ public class ClienteDaoImpl implements ClienteDao{
     @Override
     public void alterar(Object object) throws Exception {
        Cliente cliente = (Cliente) object;
-       String instrucao = "UPDATE cliente SET nome = ?, email = ?, endereco = ?, peso = ?, altura = ? WHERE matricula = ?";
+       String instrucao = "UPDATE cliente SET nome = ?, email = ?, idade = ?, endereco = ?, peso = ?, altura = ? WHERE matricula = ?";
         try{
             conexao = FabricaConexao.abrirConexao();
             preparaInstrucao = conexao.prepareStatement(instrucao);
             preparaInstrucao.setString(1, cliente.getNome());
             preparaInstrucao.setString(2, cliente.getEmail());
-            preparaInstrucao.setString(3, cliente.getEndereco());
-            preparaInstrucao.setString(4, cliente.getPeso());
-            preparaInstrucao.setString(5, cliente.getAltura());
-            preparaInstrucao.setInt(6, cliente.getMatricula());
+            preparaInstrucao.setString(3, cliente.getIdade());
+            preparaInstrucao.setString(4, cliente.getEndereco());
+            preparaInstrucao.setString(5, cliente.getPeso());
+            preparaInstrucao.setString(6, cliente.getAltura());
+            preparaInstrucao.setInt(7, cliente.getMatricula());
             preparaInstrucao.executeUpdate();        
         } catch (Exception e) {
             System.out.println("erro ao alterar dados do cliente" + e.getMessage());
@@ -111,15 +112,14 @@ public class ClienteDaoImpl implements ClienteDao{
                 cliente.setEmail(resultado.getString("email")); 
                 cliente.setSenha(resultado.getString("senha"));
                 cliente.setCpf(resultado.getInt("cpf")); 
-                cliente.setIdade(resultado.getInt("idade"));
+                cliente.setIdade(resultado.getString("idade"));
                 cliente.setEndereco(resultado.getString("endereco")); 
                 cliente.setPeso(resultado.getString("peso"));
                 cliente.setAltura(resultado.getString("altura"));
                 professor = new Professor(
                       resultado.getString("pr_nomeprofessor"),
                       resultado.getString("email"),
-                      resultado.getString("senha"),
-                      resultado.getDate("ultimoacesso"));
+                      resultado.getString("senha"));
                 cliente.setProfessor(professor);
             }
         } catch (Exception e) {
@@ -152,7 +152,7 @@ public class ClienteDaoImpl implements ClienteDao{
                 cliente.setEmail(resultado.getString("email")); 
                 cliente.setSenha(resultado.getString("senha"));
                 cliente.setCpf(resultado.getInt("cpf"));
-                cliente.setIdade(resultado.getInt("idade"));
+                cliente.setIdade(resultado.getString("idade"));
                 cliente.setEndereco(resultado.getString("endereco"));
                 cliente.setPeso(resultado.getString("peso"));
                 cliente.setAltura(resultado.getString("altura"));
@@ -160,8 +160,7 @@ public class ClienteDaoImpl implements ClienteDao{
                 professor = new Professor(
                       resultado.getString("pr_nomeprofessor"),
                       resultado.getString("email"),
-                      resultado.getString("senha"),
-                      resultado.getDate("ultimoacesso"));
+                      resultado.getString("senha"));
                 cliente.setProfessor(professor);
             }
         } catch (Exception e) {

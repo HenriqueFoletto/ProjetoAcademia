@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author Henrique
@@ -72,6 +74,32 @@ public class TreinoDaoImpl implements TreinoDao{
             conexao.close();
             preparaInstrucao.close();
         }
-    }   
+    }
+
+    @Override
+    public List<Treino> pesquisarTreinos() throws Exception {
+       String instrucao = "SELECT * FROM treino";
+      List<Treino> treinos = new ArrayList<>();
+      try{
+          conexao = FabricaConexao.abrirConexao();
+          preparaInstrucao = conexao.prepareStatement(instrucao); 
+          resultado = preparaInstrucao.executeQuery();
+          Treino treino;
+          while (resultado.next()){
+             treino = new Treino();
+             treino.setIdtreino(resultado.getInt("idtreino"));
+             treino.setNomeTreino(resultado.getString("nometreino"));
+             treinos.add(treino);
+          }
+      } catch (Exception e){
+         System.err.println("erro ao pesquisar os treinos " + e.getMessage());
+      } finally {
+          conexao.close();
+          preparaInstrucao.close();
+          resultado.close();
+      }
+      
+      return treinos;
+    }
 }
 

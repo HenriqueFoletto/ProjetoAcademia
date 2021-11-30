@@ -5,10 +5,14 @@
  */
 package academia.dao;
 
+import academia.entidade.Treino;
+import java.util.List;
+
 /**
  *
  * @author Henrique
  */
 public interface TreinoDao extends BaseDao{
     
+    List<Treino> pesquisarTreinos() throws Exception;
 }

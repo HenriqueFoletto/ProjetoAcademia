@@ -8,7 +8,6 @@ package academia.tela;
 import academia.dao.ProfessorDao;
 import academia.dao.ProfessorDaoImpl;
 import academia.entidade.Professor;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -50,7 +49,7 @@ public class PesquisarProfessor extends javax.swing.JFrame {
 
         lbTitulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbTitulo.setText("Pesquisar Cliente");
+        lbTitulo.setText("Pesquisar Professor");
 
         lbNome.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbNome.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -69,11 +68,11 @@ public class PesquisarProfessor extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome", "Email", "Ultimo Acesso", "Treino"
+                "Nome", "Email", "Treino"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -102,26 +101,22 @@ public class PesquisarProfessor extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(varNome, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btPesquisar)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(32, 32, 32)
+                .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(varNome, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btPesquisar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(62, 62, 62)
                 .addComponent(brExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66))
+            .addComponent(lbTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,15 +183,9 @@ public class PesquisarProfessor extends javax.swing.JFrame {
     private void popularTabela(){
         tabelaModelo =  (DefaultTableModel) tbProfessor.getModel();
         tabelaModelo.setNumRows(0);
-        String dataFormatada;
-        SimpleDateFormat formatado = new SimpleDateFormat("dd/MM/yyyy");
         for(Professor professor: professores){
-            dataFormatada = " - ";
-            if(professor.getUltimoAcesso() != null){
-                dataFormatada = formatado.format(professor.getUltimoAcesso());
-            }
            tabelaModelo.addRow(new Object[]{professor.getNomeProfessor(), professor.getEmail(), 
-           dataFormatada, professor.getTreino().getNomeTreino()});
+           professor.getTreino().getNomeTreino()});
         }
     }
     /**
