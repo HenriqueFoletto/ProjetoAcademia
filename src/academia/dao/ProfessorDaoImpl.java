@@ -49,14 +49,16 @@ public class ProfessorDaoImpl implements ProfessorDao{
     @Override
     public void alterar(Object object) throws Exception {
         Professor professor = (Professor) object;
-       String instrucao = "UPDATE professor SET nomeprofessor = ?, email = ?, senha = ? WHERE idprofessor = ?";
+       String instrucao = "UPDATE professor SET nomeprofessor = ?, email = ?, senha = ?,"
+               + " idtreino = ? WHERE idprofessor = ?";
         try{
             conexao = FabricaConexao.abrirConexao();
             preparaInstrucao = conexao.prepareStatement(instrucao);
             preparaInstrucao.setString(1, professor.getNomeProfessor());
             preparaInstrucao.setString(2, professor.getEmail());
             preparaInstrucao.setString(3, professor.getSenha());
-            preparaInstrucao.setInt(4, professor.getIdprofessor());    
+            preparaInstrucao.setInt(4, professor.getTreino().getIdtreino());
+            preparaInstrucao.setInt(5, professor.getIdprofessor());    
             preparaInstrucao.executeUpdate();
         } catch (Exception e) {
             System.out.println("erro ao alterar o nomeprofessor" + e.getMessage());

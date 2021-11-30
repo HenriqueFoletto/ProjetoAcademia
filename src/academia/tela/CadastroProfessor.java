@@ -151,7 +151,14 @@ public class CadastroProfessor extends javax.swing.JFrame {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         if (professor == null) {
             professor = new Professor();
-            professor.setSenha("1234");
+        String senha = "";
+        String[] letras = {"0","1","2","3","4","5","6","7","8","9"};
+        int tamanhoVetor = letras.length;
+        for(int i = 0; i < 5; i++){
+              int indice = (int) (Math.random() * tamanhoVetor);
+              senha = senha + letras[indice];
+            }
+            professor.setSenha(senha);
         }
         int linhaSelecionada = varBoxTreino.getSelectedIndex();
         Treino treino = treinos.get(linhaSelecionada - 1);
