@@ -35,7 +35,7 @@ public class ClienteDaoImpl implements ClienteDao{
             preparaInstrucao.setString(1, cliente.getNome());
             preparaInstrucao.setString(2, cliente.getEmail());
             preparaInstrucao.setString(3, cliente.getSenha());
-            preparaInstrucao.setInt(4, cliente.getCpf());
+            preparaInstrucao.setString(4, cliente.getCpf());
             preparaInstrucao.setString(5, cliente.getIdade());
             preparaInstrucao.setString(6, cliente.getEndereco());
             preparaInstrucao.setString(7, cliente.getPeso());
@@ -111,7 +111,7 @@ public class ClienteDaoImpl implements ClienteDao{
                 cliente.setNome(resultado.getString("nome"));
                 cliente.setEmail(resultado.getString("email")); 
                 cliente.setSenha(resultado.getString("senha"));
-                cliente.setCpf(resultado.getInt("cpf")); 
+                cliente.setCpf(resultado.getString("cpf")); 
                 cliente.setIdade(resultado.getString("idade"));
                 cliente.setEndereco(resultado.getString("endereco")); 
                 cliente.setPeso(resultado.getString("peso"));
@@ -151,7 +151,7 @@ public class ClienteDaoImpl implements ClienteDao{
                 cliente.setNome(resultado.getString("nome"));
                 cliente.setEmail(resultado.getString("email")); 
                 cliente.setSenha(resultado.getString("senha"));
-                cliente.setCpf(resultado.getInt("cpf"));
+                cliente.setCpf(resultado.getString("cpf"));
                 cliente.setIdade(resultado.getString("idade"));
                 cliente.setEndereco(resultado.getString("endereco"));
                 cliente.setPeso(resultado.getString("peso"));

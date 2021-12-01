@@ -17,7 +17,7 @@ public class Cliente implements Serializable {
     private String nome;
     private String email;
     private String senha;
-    private int cpf;
+    private String cpf;
     private String idade;
     private String endereco;
     private String peso;
@@ -27,7 +27,7 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(String nome, String email, String senha, int cpf,
+    public Cliente(String nome, String email, String senha, String cpf,
                 String idade, String endereco, String peso, String altura) {
         this.nome = nome;
         this.cpf = cpf;
@@ -71,11 +71,11 @@ public class Cliente implements Serializable {
         this.senha = senha;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

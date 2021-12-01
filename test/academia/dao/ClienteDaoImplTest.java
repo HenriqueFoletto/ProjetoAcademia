@@ -32,8 +32,8 @@ public class ClienteDaoImplTest {
         System.out.println("salvar");
         Professor professor = new Professor();
         professor.setIdprofessor(3);
-        cliente = new Cliente("Pedro", "Pedro@", "23167", 132357943, "20",
-                "Ipiranga", "80kg", "1.87m");
+        cliente = new Cliente("Hector Gilberto", "HectorGil@hotmail.com", "43321", "234567893123", "35",
+                "barreiros,Rua Onze de Junho, Nº30", "73kg", "1.70m");
         cliente.setProfessor(professor);
         clienteDao.salvar(cliente);
     }
@@ -108,7 +108,7 @@ public class ClienteDaoImplTest {
             cliente.setNome(resultado.getString("nome"));
             cliente.setEmail(resultado.getString("email"));
             cliente.setSenha(resultado.getString("senha"));
-            cliente.setCpf(resultado.getInt("cpf"));
+            cliente.setCpf(resultado.getString("cpf"));
             cliente.setIdade(resultado.getString("idade"));
             cliente.setEndereco(resultado.getString("endereco"));
             cliente.setPeso(resultado.getString("peso"));
